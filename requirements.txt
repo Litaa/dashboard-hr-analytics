@@ -1,4 +1,4 @@
--atplotlib==3.3.3
+matplotlib==3.3.3
 alabaster==0.7.12
 anaconda-client==1.7.2
 anaconda-navigator==1.9.12
