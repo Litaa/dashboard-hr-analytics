@@ -7,6 +7,7 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
+import math
 
 # color theme for PLN
 color_pln = ['#f7e82e','#4ca8e0','#e72a2b']
@@ -45,6 +46,12 @@ promotion[['department',
 promoted_employee = promotion[promotion['is_promoted'] == 'Yes']
 sum_promoted = promoted_employee.shape[0]
 
+KPI_meet = promotion[promotion['KPIs_met >80%'] == 'Yes']
+sum_KPI = KPI_meet.shape[0]
+
+age_avg = promotion['age'].mean()
+age_average = math.ceil(age_avg)
+
 # card information
 card_information = [
     dbc.CardHeader("Information"),
@@ -62,6 +69,20 @@ card_promoted = [
     dbc.CardHeader("Who is Promoted?"),
     dbc.CardBody(
         html.H2(sum_promoted)
+    ),
+]
+
+card_KPI = [
+    dbc.CardHeader("Who meet the KPI?"),
+    dbc.CardBody(
+        html.H2(sum_KPI)
+    ),
+]
+
+card_age = [
+    dbc.CardHeader("Average Age"),
+    dbc.CardBody(
+        html.H2(age_average)
     ),
 ]
 
@@ -99,16 +120,6 @@ server = app.server
 # LAYOUT    
 app.layout = html.Div(children=[
     dbc.NavbarSimple(
-        children=[dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("More pages", header=True),
-                dbc.DropdownMenuItem("Prediction", href="#"),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="Pages",
-        ),
-        ],
         brand="",
         brand_href="#",
         color="info",
@@ -123,8 +134,8 @@ app.layout = html.Div(children=[
         [
         dbc.Col(dbc.Card(card_information, color="primary", outline=True), width=6) ,
         dbc.Col(dbc.Card(card_promoted, color="warning", inverse=True, style = {"textAlign": "center"}), width=2),
-        dbc.Col(dbc.Card(card_promoted, color="info", inverse=True, style = {"textAlign": "center"}), width=2),
-        dbc.Col(dbc.Card(card_promoted, color="danger", inverse=True, style = {"textAlign": "center"}), width=2),
+        dbc.Col(dbc.Card(card_KPI, color="info", inverse=True, style = {"textAlign": "center"}), width=2),
+        dbc.Col(dbc.Card(card_age, color="danger", inverse=True, style = {"textAlign": "center"}), width=2),
 
     ]
     ),
