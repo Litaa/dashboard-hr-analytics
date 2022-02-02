@@ -1,8 +1,5 @@
 # -------------------1. IMPORT DASH--------------------------
 ## Import Library
-from ctypes import alignment
-from pydoc import classname
-from turtle import width
 import dash
 from dash import dcc
 from dash import html
